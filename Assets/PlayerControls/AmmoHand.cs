@@ -21,10 +21,20 @@ public class AmmoHand : Hand
 				currHeldObject.transform.localPosition = new Vector3();
 				currHeldObject.transform.localEulerAngles = Vector3.zero;
 			}
-			else if (currHeldObject != null && hoveredObjects.Count > 0)
+			else if (currHeldObject == null && hoveredObjects.Count > 0)
 			{
 				hoveredObjects[0].PickupObject();
+				currHeldObject = hoveredObjects[0];
 				hoveredObjects.RemoveAt(0);
+			}
+		};
+
+		triggerUp += () =>
+		{
+			if (currHeldObject != null)
+			{
+				currHeldObject.DropObject();
+				currHeldObject = null;
 			}
 		};
 	}
@@ -50,6 +60,14 @@ public class AmmoHand : Hand
 		if (ho != null && hoveredObjects.Contains(ho))
 		{
 			hoveredObjects.Remove(ho);
+		}
+	}
+
+	public void HandleSnapAway(HoldableObject obj)
+	{
+		if (currHeldObject != null && currHeldObject.Equals(obj))
+		{
+			currHeldObject = null;
 		}
 	}
 }

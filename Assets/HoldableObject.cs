@@ -24,8 +24,8 @@ public class HoldableObject : MonoBehaviour
 
 	public void PickupObject()
 	{
-		GetComponent<Rigidbody>().useGravity = true;
-		GetComponent<Rigidbody>().isKinematic = false;
+		GetComponent<Rigidbody>().useGravity = false;
+		GetComponent<Rigidbody>().isKinematic = true;
 		transform.SetParent(Singletons.AmmoHand().transform);
 		HandlePickup();
 	}
@@ -47,6 +47,8 @@ public class HoldableObject : MonoBehaviour
 			transform.localPosition = Vector3.zero;
 			transform.localEulerAngles = Vector3.zero;
 			HandleSnap(snp);
+
+			Singletons.AmmoHand().HandleSnapAway(this);
 		}
 	}
 

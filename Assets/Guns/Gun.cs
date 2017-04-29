@@ -9,7 +9,7 @@ public class Gun : MonoBehaviour
 
 	public Magazine currMag { get; set; }
 	private GunHand gunHand;
-	private float bulletWaitTileS = 0.1f;
+	private float bulletWaitTimeS = 0.1f;
 
 	// Use this for initialization
 	void Start ()
@@ -24,7 +24,7 @@ public class Gun : MonoBehaviour
 		while (currMag != null && currMag.bulletCount > 0)
 		{
 			FireBullet();
-			yield return new WaitForSeconds(bulletWaitTileS);
+			yield return new WaitForSeconds(bulletWaitTimeS);
 		}
 	}
 

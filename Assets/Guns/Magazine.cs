@@ -13,7 +13,7 @@ public class Magazine : HoldableObject
 
 	protected override void HandlePickup()
 	{
-		if (Singletons.GunHand().getCurrGun().currMag.Equals(this))
+		if (Singletons.GunHand().getCurrGun().currMag != null && Singletons.GunHand().getCurrGun().currMag.Equals(this))
 		{
 			Singletons.GunHand().getCurrGun().currMag = null;
 		}
