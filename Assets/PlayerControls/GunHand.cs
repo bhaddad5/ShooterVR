@@ -10,7 +10,7 @@ public class GunHand : Hand
 	
 	private GameObject currGun;
 	// Use this for initialization
-	void Start ()
+	protected override void Setup()
 	{
 		currGun = Instantiate(StartingGunPrefab);
 		currGun.transform.SetParent(transform, true);

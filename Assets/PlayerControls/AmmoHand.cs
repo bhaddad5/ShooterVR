@@ -11,11 +11,10 @@ public class AmmoHand : Hand
 	public GameObject currHeldMag { get; set; }
 
 	// Use this for initialization
-	void Start()
+	protected override void Setup()
 	{
 		triggerDown += () =>
 		{
-			Debug.Log("trigger down");
 			if (behindPlayer())
 			{
 				currHeldMag = Instantiate(gunHand.StartingGunPrefab.GetComponent<Gun>().MagazinePrefab);

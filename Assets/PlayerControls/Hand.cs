@@ -11,11 +11,16 @@ public class Hand : MonoBehaviour
 
 	protected SteamVR_Controller.Device ctrl;
 
-	void OnEnable()
+	void Start()
 	{
-		//ctrl = SteamVR_Controller.Input((int)GetComponent<SteamVR_TrackedObject>().index);
-
 		ctrl = SteamVR_Controller.Input((int)GetComponent<SteamVR_TrackedObject>().index);
+		Debug.Log(gameObject.name + ", " + GetComponent<SteamVR_TrackedObject>().index);
+		Setup();
+	}
+
+	protected virtual void Setup()
+	{
+		
 	}
 
 	void Update()

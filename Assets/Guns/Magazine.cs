@@ -13,6 +13,7 @@ public class Magazine : MonoBehaviour
 			transform.SetParent(other.transform);
 			transform.localPosition = new Vector3(0f, 0f, 0f);
 			transform.localEulerAngles = Vector3.zero;
+			other.GetComponent<Gun>().currMag = this;
 		}
 	}
 }
