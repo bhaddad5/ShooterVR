@@ -6,9 +6,8 @@ using UnityEngine;
 
 public class AmmoHand : Hand
 {
-	public GunHand gunHand;
-
-	public GameObject currHeldMag { get; set; }
+	private HoldableObject currHeldObject;
+	private List<HoldableObject> hoveredObjects = new List<HoldableObject>();
 
 	// Use this for initialization
 	protected override void Setup()
@@ -17,10 +16,15 @@ public class AmmoHand : Hand
 		{
 			if (behindPlayer())
 			{
-				currHeldMag = Instantiate(gunHand.StartingGunPrefab.GetComponent<Gun>().MagazinePrefab);
-				currHeldMag.transform.SetParent(transform);
-				currHeldMag.transform.localPosition = new Vector3();
-				currHeldMag.transform.localEulerAngles = Vector3.zero;
+				currHeldObject = Instantiate(Singletons.GunHand().StartingGunPrefab.GetComponent<Gun>().MagazinePrefab).GetComponent<HoldableObject>();
+				currHeldObject.transform.SetParent(transform);
+				currHeldObject.transform.localPosition = new Vector3();
+				currHeldObject.transform.localEulerAngles = Vector3.zero;
+			}
+			else if (currHeldObject != null && hoveredObjects.Count > 0)
+			{
+				hoveredObjects[0].PickupObject();
+				hoveredObjects.RemoveAt(0);
 			}
 		};
 	}
@@ -29,5 +33,23 @@ public class AmmoHand : Hand
 	{
 		Vector3 headToHand = transform.position - Camera.main.transform.position;
 		return Vector3.Angle(headToHand, Camera.main.transform.forward) > 70;
+	}
+
+	void OnTriggerEnter(Collider other)
+	{
+		var ho = other.GetComponent<HoldableObject>();
+		if (ho != null && !hoveredObjects.Contains(ho))
+		{
+			hoveredObjects.Add(ho);
+		}
+	}
+
+	void OnTriggerExit(Collider other)
+	{
+		var ho = other.GetComponent<HoldableObject>();
+		if (ho != null && hoveredObjects.Contains(ho))
+		{
+			hoveredObjects.Remove(ho);
+		}
 	}
 }

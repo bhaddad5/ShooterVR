@@ -9,7 +9,7 @@ public class Gun : MonoBehaviour
 
 	public Magazine currMag { get; set; }
 	private GunHand gunHand;
-	private float bulletWaitTileS = 0.4f;
+	private float bulletWaitTileS = 0.1f;
 
 	// Use this for initialization
 	void Start ()

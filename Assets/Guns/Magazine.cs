@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Magazine : MonoBehaviour
+public class Magazine : HoldableObject
 {
 	public int bulletCount;
 
-	void OnTriggerEnter(Collider other)
+	protected override void HandleSnap(ObjectSnapArea objSnappedTo)
 	{
-		if (other.transform.parent.GetComponent<Gun>())
+		objSnappedTo.transform.parent.GetComponent<Gun>().currMag = this;
+	}
+
+	protected override void HandlePickup()
+	{
+		if (Singletons.GunHand().getCurrGun().currMag.Equals(this))
 		{
-			transform.SetParent(other.transform);
-			transform.localPosition = new Vector3(0f, 0f, 0f);
-			transform.localEulerAngles = Vector3.zero;
-			other.transform.parent.GetComponent<Gun>().currMag = this;
+			Singletons.GunHand().getCurrGun().currMag = null;
 		}
 	}
 }

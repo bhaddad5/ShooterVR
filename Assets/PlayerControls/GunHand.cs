@@ -16,5 +16,8 @@ public class GunHand : Hand
 		currGun.transform.SetParent(transform, true);
 	}
 
-	
+	public Gun getCurrGun()
+	{
+		return currGun.GetComponent<Gun>();
+	}
 }
