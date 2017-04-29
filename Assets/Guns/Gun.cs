@@ -6,22 +6,32 @@ public class Gun : MonoBehaviour
 {
 	public GameObject MagazinePrefab;
 	public GameObject BulletPrefab;
+	public Transform bulletSpawnPoint;
+
+	public float damage;
+	public float bulletWaitTimeS;
+	public float bulletSpeed;
 
 	public Magazine currMag { get; set; }
 	private GunHand gunHand;
-	private float bulletWaitTimeS = 0.1f;
+
+	private bool firing = false;
 
 	// Use this for initialization
 	void Start ()
 	{
 		gunHand = transform.parent.GetComponent<GunHand>();
-		gunHand.triggerDown += () => StartCoroutine(fireBullets());
-		gunHand.triggerUp += () => StopCoroutine(fireBullets());
+		gunHand.triggerDown += () =>
+		{
+			firing = true;
+			StartCoroutine(fireBullets());
+		};
+		gunHand.triggerUp += () => firing = false;
 	}
 
 	private IEnumerator fireBullets()
 	{
-		while (currMag != null && currMag.bulletCount > 0)
+		while (firing && currMag != null && currMag.bulletCount > 0)
 		{
 			FireBullet();
 			yield return new WaitForSeconds(bulletWaitTimeS);
@@ -32,9 +42,11 @@ public class Gun : MonoBehaviour
 	{
 		currMag.bulletCount--;
 		gunHand.TriggerHaptic();
-		GameObject bullet = Instantiate(BulletPrefab);
-		bullet.transform.position = transform.position;
-		bullet.transform.eulerAngles = transform.forward;
-		bullet.GetComponent<Bullet>().direction = transform.forward.normalized;
+		Bullet bullet = Instantiate(BulletPrefab).GetComponent<Bullet>();
+		bullet.transform.position = bulletSpawnPoint.position;
+		bullet.transform.eulerAngles = -bulletSpawnPoint.up;
+		bullet.direction = -bulletSpawnPoint.up.normalized;
+		bullet.damage = damage;
+		bullet.speed = bulletSpeed;
 	}
 }

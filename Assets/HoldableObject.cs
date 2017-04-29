@@ -41,9 +41,9 @@ public class HoldableObject : MonoBehaviour
 	void OnTriggerEnter(Collider other)
 	{
 		var snp = other.GetComponent<ObjectSnapArea>();
-		if (snp != null && snp.snapType==snapType)
+		if (snp != null && snp.snapType==snapType && snp.currSnappedObj == null)
 		{
-			transform.SetParent(other.transform);
+			transform.SetParent(other.transform, true);
 			transform.localPosition = Vector3.zero;
 			transform.localEulerAngles = Vector3.zero;
 			HandleSnap(snp);

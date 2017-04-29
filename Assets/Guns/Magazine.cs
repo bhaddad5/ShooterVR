@@ -8,7 +8,7 @@ public class Magazine : HoldableObject
 
 	protected override void HandleSnap(ObjectSnapArea objSnappedTo)
 	{
-		objSnappedTo.transform.parent.GetComponent<Gun>().currMag = this;
+		objSnappedTo.transform.parent.parent.GetComponent<Gun>().currMag = this;
 	}
 
 	protected override void HandlePickup()

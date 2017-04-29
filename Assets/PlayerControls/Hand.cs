@@ -37,7 +37,7 @@ public class Hand : MonoBehaviour
 
 	public void TriggerHaptic()
 	{
-		ctrl.TriggerHapticPulse();
+		ctrl.TriggerHapticPulse(1000);
 	}
 }
 
