@@ -34,5 +34,10 @@ public class Hand : MonoBehaviour
 			triggerUp.Invoke();
 		}
 	}
+
+	public void TriggerHaptic()
+	{
+		ctrl.TriggerHapticPulse();
+	}
 }
 

@@ -8,12 +8,12 @@ public class Magazine : MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
 	{
-		if (other.GetComponent<Gun>())
+		if (other.transform.parent.GetComponent<Gun>())
 		{
 			transform.SetParent(other.transform);
 			transform.localPosition = new Vector3(0f, 0f, 0f);
 			transform.localEulerAngles = Vector3.zero;
-			other.GetComponent<Gun>().currMag = this;
+			other.transform.parent.GetComponent<Gun>().currMag = this;
 		}
 	}
 }

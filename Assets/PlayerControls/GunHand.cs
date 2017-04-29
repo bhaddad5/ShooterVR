@@ -14,7 +14,6 @@ public class GunHand : Hand
 	{
 		currGun = Instantiate(StartingGunPrefab);
 		currGun.transform.SetParent(transform, true);
-		currGun.transform.localEulerAngles = new Vector3(-40f, 0f, 0f);
 	}
 
 	
