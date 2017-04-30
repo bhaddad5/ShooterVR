@@ -9,35 +9,21 @@ public class Hand : MonoBehaviour
 	public Action triggerDown;
 	public Action triggerUp;
 
-	protected SteamVR_Controller.Device ctrl;
+	protected SteamVR_TrackedController ctrl;
 
 	void Start()
 	{
-		ctrl = SteamVR_Controller.Input((int)GetComponent<SteamVR_TrackedObject>().index);
-		Debug.Log(gameObject.name + ", " + GetComponent<SteamVR_TrackedObject>().index);
+		ctrl = GetComponent<SteamVR_TrackedController>();
+		ctrl.TriggerClicked += (sender, args) => triggerDown.Invoke();
+		ctrl.TriggerUnclicked += (sender, args) => triggerUp.Invoke();
 		Setup();
 	}
 
-	protected virtual void Setup()
-	{
-		
-	}
-
-	void Update()
-	{
-		if (ctrl.GetHairTriggerDown() && triggerDown != null)
-		{
-			triggerDown.Invoke();
-		}
-		if (ctrl.GetHairTriggerUp() && triggerUp != null)
-		{
-			triggerUp.Invoke();
-		}
-	}
+	protected virtual void Setup(){}
 
 	public void TriggerHaptic()
 	{
-		ctrl.TriggerHapticPulse(1000);
+		SteamVR_Controller.Input((int)ctrl.controllerIndex).TriggerHapticPulse(1000);
 	}
 }
 

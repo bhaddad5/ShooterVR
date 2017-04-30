@@ -43,7 +43,7 @@ public class HoldableObject : MonoBehaviour
 		var snp = other.GetComponent<ObjectSnapArea>();
 		if (snp != null && snp.snapType==snapType && snp.currSnappedObj == null)
 		{
-			transform.SetParent(other.transform, true);
+			transform.SetParent(other.transform);
 			transform.localPosition = Vector3.zero;
 			transform.localEulerAngles = Vector3.zero;
 			HandleSnap(snp);
