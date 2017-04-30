@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-public class AmmoHand : Hand
+public class GrabbingHand : Hand
 {
 	private HoldableObject currHeldObject;
 	private List<HoldableObject> hoveredObjects = new List<HoldableObject>();

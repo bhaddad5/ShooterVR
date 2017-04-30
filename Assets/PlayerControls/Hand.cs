@@ -23,7 +23,7 @@ public class Hand : MonoBehaviour
 
 	public void TriggerHaptic()
 	{
-		SteamVR_Controller.Input((int)ctrl.controllerIndex).TriggerHapticPulse(1000);
+		SteamVR_Controller.Input((int)ctrl.controllerIndex).TriggerHapticPulse(2000);
 	}
 }
 

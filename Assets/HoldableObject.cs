@@ -24,9 +24,11 @@ public class HoldableObject : MonoBehaviour
 
 	public void PickupObject()
 	{
+		if (transform.parent.GetComponent<ObjectSnapArea>())
+			transform.parent.GetComponent<ObjectSnapArea>().currSnappedObj = null;
 		GetComponent<Rigidbody>().useGravity = false;
 		GetComponent<Rigidbody>().isKinematic = true;
-		transform.SetParent(Singletons.AmmoHand().transform);
+		transform.SetParent(Singletons.GrabbingHand().transform);
 		HandlePickup();
 	}
 
@@ -41,14 +43,15 @@ public class HoldableObject : MonoBehaviour
 	void OnTriggerEnter(Collider other)
 	{
 		var snp = other.GetComponent<ObjectSnapArea>();
-		if (snp != null && snp.snapType==snapType && snp.currSnappedObj == null)
+		if (snp != null && snp.snapType==snapType && snp.currSnappedObj == null && !transform.parent.GetComponent<ObjectSnapArea>())
 		{
-			transform.SetParent(other.transform);
+			snp.currSnappedObj = this;
+			transform.SetParent(other.transform, true);
 			transform.localPosition = Vector3.zero;
 			transform.localEulerAngles = Vector3.zero;
 			HandleSnap(snp);
 
-			Singletons.AmmoHand().HandleSnapAway(this);
+			Singletons.GrabbingHand().HandleSnapAway(this);
 		}
 	}
 

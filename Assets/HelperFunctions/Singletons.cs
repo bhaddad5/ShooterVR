@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Singletons
 {
-	private static AmmoHand ammoHand;
-	public static AmmoHand AmmoHand()
+	private static GrabbingHand grabbingHand;
+	public static GrabbingHand GrabbingHand()
 	{
-		if (ammoHand == null)
+		if (grabbingHand == null)
 		{
-			ammoHand = GameObject.Find("[CameraRig]").GetComponentInChildren<AmmoHand>();
+			grabbingHand = GameObject.Find("[CameraRig]").GetComponentInChildren<GrabbingHand>();
 		}
-		return ammoHand;
+		return grabbingHand;
 	}
 
 	private static GunHand gunHand;

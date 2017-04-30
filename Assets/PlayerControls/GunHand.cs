@@ -13,7 +13,7 @@ public class GunHand : Hand
 	protected override void Setup()
 	{
 		currGun = Instantiate(StartingGunPrefab);
-		currGun.transform.SetParent(transform, true);
+		currGun.transform.SetParent(transform);
 	}
 
 	public Gun getCurrGun()
