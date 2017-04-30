@@ -49,6 +49,7 @@ public class HoldableObject : MonoBehaviour
 			transform.SetParent(other.transform, true);
 			transform.localPosition = Vector3.zero;
 			transform.localEulerAngles = Vector3.zero;
+			transform.localScale = new Vector3(1/transform.parent.lossyScale.x, 1 / transform.parent.lossyScale.y, 1 / transform.parent.lossyScale.z);
 			HandleSnap(snp);
 
 			Singletons.GrabbingHand().HandleSnapAway(this);
