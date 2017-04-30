@@ -6,9 +6,9 @@ public class Gun : MonoBehaviour
 {
 	public GameObject MagazinePrefab;
 	public GameObject BulletPrefab;
-	public Transform bulletSpawnPoint;
+	public Transform BulletSpawnPoint;
 
-	public float damage;
+	public float bulletDamage;
 	public float bulletWaitTimeS;
 	public float bulletSpeed;
 
@@ -33,19 +33,19 @@ public class Gun : MonoBehaviour
 	{
 		while (firing && currMag != null && currMag.bulletCount > 0)
 		{
-			FireBullet();
+			FireBullet(BulletPrefab, BulletSpawnPoint, bulletDamage, bulletSpeed);
+			currMag.bulletCount--;
+			gunHand.TriggerHaptic();
 			yield return new WaitForSeconds(bulletWaitTimeS);
 		}
 	}
 
-	private void FireBullet()
+	public static void FireBullet(GameObject bulletPrefab, Transform bulletSpawnPoint, float dmg, float speed)
 	{
-		currMag.bulletCount--;
-		gunHand.TriggerHaptic();
-		Bullet bullet = Instantiate(BulletPrefab).GetComponent<Bullet>();
+		Bullet bullet = Instantiate(bulletPrefab).GetComponent<Bullet>();
 		bullet.transform.position = bulletSpawnPoint.position;
 		bullet.transform.eulerAngles = bulletSpawnPoint.eulerAngles;
-		bullet.damage = damage;
-		bullet.speed = bulletSpeed;
+		bullet.damage = dmg;
+		bullet.speed = speed;
 	}
 }
