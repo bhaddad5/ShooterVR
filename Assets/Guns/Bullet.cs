@@ -6,7 +6,6 @@ public class Bullet : MonoBehaviour
 {
 	public float damage { get; set; }
 	public float speed { get; set; }
-	public Vector3 direction { get; set; }
 
 	private const float bulletMaxTime = 10f;
 	private float startTime;
@@ -19,7 +18,7 @@ public class Bullet : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		transform.Translate(direction*speed);
+		transform.position += transform.forward.normalized*speed;
 
 		if(Time.time >= startTime + bulletMaxTime)
 			Destroy(gameObject);

@@ -44,8 +44,7 @@ public class Gun : MonoBehaviour
 		gunHand.TriggerHaptic();
 		Bullet bullet = Instantiate(BulletPrefab).GetComponent<Bullet>();
 		bullet.transform.position = bulletSpawnPoint.position;
-		bullet.transform.eulerAngles = -bulletSpawnPoint.up;
-		bullet.direction = -bulletSpawnPoint.up.normalized;
+		bullet.transform.eulerAngles = bulletSpawnPoint.eulerAngles;
 		bullet.damage = damage;
 		bullet.speed = bulletSpeed;
 	}

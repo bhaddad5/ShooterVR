@@ -45,15 +45,19 @@ public class HoldableObject : MonoBehaviour
 		var snp = other.GetComponent<ObjectSnapArea>();
 		if (snp != null && snp.snapType==snapType && snp.currSnappedObj == null && !transform.parent.GetComponent<ObjectSnapArea>())
 		{
-			snp.currSnappedObj = this;
-			transform.SetParent(other.transform, true);
-			transform.localPosition = Vector3.zero;
-			transform.localEulerAngles = Vector3.zero;
-			transform.localScale = new Vector3(1/transform.parent.lossyScale.x, 1 / transform.parent.lossyScale.y, 1 / transform.parent.lossyScale.z);
-			HandleSnap(snp);
-
+			SnapToObject(snp);
 			Singletons.GrabbingHand().HandleSnapAway(this);
 		}
+	}
+
+	public void SnapToObject(ObjectSnapArea snp)
+	{
+		snp.currSnappedObj = this;
+		transform.SetParent(snp.transform, true);
+		transform.localPosition = Vector3.zero;
+		transform.localEulerAngles = Vector3.zero;
+		transform.localScale = new Vector3(1 / transform.parent.lossyScale.x, 1 / transform.parent.lossyScale.y, 1 / transform.parent.lossyScale.z);
+		HandleSnap(snp);
 	}
 
 	protected virtual void HandleSnap(ObjectSnapArea objSnappedTo) {}
