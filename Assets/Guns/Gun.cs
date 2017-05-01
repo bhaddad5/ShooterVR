@@ -6,7 +6,9 @@ public class Gun : MonoBehaviour
 {
 	public GameObject MagazinePrefab;
 	public GameObject BulletPrefab;
+	public GameObject CasingPrefab;
 	public Transform BulletSpawnPoint;
+	public Transform CasingSpawnPoint;
 
 	public float bulletDamage;
 	public float bulletWaitTimeS;
@@ -34,6 +36,7 @@ public class Gun : MonoBehaviour
 		while (firing && currMag != null && currMag.bulletCount > 0)
 		{
 			FireBullet(BulletPrefab, BulletSpawnPoint, bulletDamage, bulletSpeed);
+			FireCasing(CasingPrefab, CasingSpawnPoint);
 			currMag.bulletCount--;
 			gunHand.TriggerHaptic();
 			yield return new WaitForSeconds(bulletWaitTimeS);
@@ -47,5 +50,14 @@ public class Gun : MonoBehaviour
 		bullet.transform.eulerAngles = bulletSpawnPoint.eulerAngles;
 		bullet.damage = dmg;
 		bullet.speed = speed;
+	}
+
+	public static void FireCasing(GameObject casingPrefab, Transform casingSpawnPoint)
+	{
+		float casingSpeed = 100f;
+		Casing casing = Instantiate(casingPrefab).GetComponent<Casing>();
+		casing.transform.position = casingSpawnPoint.position;
+		casing.transform.eulerAngles = casingSpawnPoint.eulerAngles;
+		casing.GetComponent<Rigidbody>().AddForce(casing.transform.right.normalized * casingSpeed);
 	}
 }
