@@ -13,7 +13,6 @@ public class DamageReciever : MonoBehaviour
 		{
 			if (!gameObject.GetComponent<Camera>())
 				Destroy(gameObject);
-			else Debug.Log("DEATH!!!");
 		}
 	}
 }

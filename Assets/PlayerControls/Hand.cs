@@ -18,8 +18,13 @@ public class Hand : MonoBehaviour
 		ctrl.TriggerUnclicked += (sender, args) => triggerUp.Invoke();
 		Setup();
 	}
-
 	protected virtual void Setup(){}
+
+	void Update()
+	{
+		OnUpdate();
+	}
+	protected virtual void OnUpdate(){}
 
 	public void TriggerHaptic()
 	{
