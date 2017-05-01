@@ -18,18 +18,17 @@ public class Bullet : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		RaycastHit hit;
+		if (Physics.Raycast(transform.position, transform.forward, out hit, speed))
+		{
+			if(hit.transform.GetComponent<DamageReciever>())
+				hit.transform.GetComponent<DamageReciever>().TakeDamage(this);
+			Destroy(gameObject);
+		}
+
 		transform.position += transform.forward.normalized*speed;
 
 		if(Time.time >= startTime + bulletMaxTime)
 			Destroy(gameObject);
-	}
-
-	void OnTriggerEnter(Collider other)
-	{
-		var damageReciever = other.GetComponent<DamageReciever>();
-		if (damageReciever == null)
-		{
-			Destroy(gameObject);
-		}
 	}
 }
