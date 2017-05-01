@@ -15,20 +15,21 @@ public class Gun : MonoBehaviour
 	public float bulletSpeed;
 
 	public Magazine currMag { get; set; }
-	private GunHand gunHand;
 
 	private bool firing = false;
+	private AudioSource source;
 
 	// Use this for initialization
 	void Start ()
 	{
-		gunHand = transform.parent.GetComponent<GunHand>();
-		gunHand.triggerDown += () =>
+		source = GetComponent<AudioSource>();
+
+		Singletons.GunHand().triggerDown += () =>
 		{
 			firing = true;
 			StartCoroutine(fireBullets());
 		};
-		gunHand.triggerUp += () => firing = false;
+		Singletons.GunHand().triggerUp += () => firing = false;
 	}
 
 	private IEnumerator fireBullets()
@@ -37,8 +38,9 @@ public class Gun : MonoBehaviour
 		{
 			FireBullet(BulletPrefab, BulletSpawnPoint, bulletDamage, bulletSpeed);
 			FireCasing(CasingPrefab, CasingSpawnPoint);
+			source.Play();
 			currMag.bulletCount--;
-			gunHand.TriggerHaptic();
+			Singletons.GunHand().TriggerHaptic();
 			yield return new WaitForSeconds(bulletWaitTimeS);
 		}
 	}
