@@ -6,10 +6,9 @@ public class DamageReciever : MonoBehaviour
 {
 	public float health;
 
-	public void TakeDamage(Bullet bullet)
+	public void TakeDamage(float damage)
 	{
-		health -= bullet.damage;
-		Destroy(bullet.gameObject);
+		health -= damage;
 		if (health <= 0)
 		{
 			if (!gameObject.GetComponent<Camera>())

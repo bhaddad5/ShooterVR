@@ -6,7 +6,6 @@ using UnityEngine;
 public class GunHand : Hand
 {
 	public GameObject StartingGunPrefab;
-
 	
 	private GameObject currGun;
 	// Use this for initialization

@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour
 		if (Physics.Raycast(transform.position, transform.forward, out hit, speed))
 		{
 			if(hit.transform.GetComponent<DamageReciever>())
-				hit.transform.GetComponent<DamageReciever>().TakeDamage(this);
+				hit.transform.GetComponent<DamageReciever>().TakeDamage(damage);
 			Destroy(gameObject);
 		}
 
