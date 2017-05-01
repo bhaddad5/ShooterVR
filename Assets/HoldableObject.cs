@@ -43,7 +43,7 @@ public class HoldableObject : MonoBehaviour
 	void OnTriggerEnter(Collider other)
 	{
 		var snp = other.GetComponent<ObjectSnapArea>();
-		if (snp != null && snp.snapType==snapType && snp.currSnappedObj == null && !transform.parent.GetComponent<ObjectSnapArea>())
+		if (snp != null && snp.snapType==snapType && snp.currSnappedObj == null && transform.parent != null && !transform.parent.GetComponent<ObjectSnapArea>())
 		{
 			SnapToObject(snp);
 			Singletons.GrabbingHand().HandleSnapAway(this);

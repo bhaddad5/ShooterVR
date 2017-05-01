@@ -23,4 +23,13 @@ public class Bullet : MonoBehaviour
 		if(Time.time >= startTime + bulletMaxTime)
 			Destroy(gameObject);
 	}
+
+	void OnTriggerEnter(Collider other)
+	{
+		var damageReciever = other.GetComponent<DamageReciever>();
+		if (damageReciever == null)
+		{
+			Destroy(gameObject);
+		}
+	}
 }
