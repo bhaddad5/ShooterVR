@@ -7,10 +7,15 @@ public class Grenade : HoldableObject
 	public float damage;
 	public float damageRadius;
 	public int timeToDetination;
+	public Rigidbody pin;
 
 	protected override void HandleDrop()
 	{
-		Debug.Log("DROPPED GRENADE");
+		pin.transform.parent = null;
+		pin.useGravity = true;
+		pin.isKinematic = false;
+		pin.AddForce(pin.transform.up.normalized * 100f);
+
 		StartCoroutine(GrenadeTimeout());
 	}
 
