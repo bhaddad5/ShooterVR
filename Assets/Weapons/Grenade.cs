@@ -8,6 +8,7 @@ public class Grenade : HoldableObject
 	public float damageRadius;
 	public int timeToDetination;
 	public Rigidbody pin;
+	public ParticleSystem particleSystem;
 
 	protected override void HandleDrop()
 	{
@@ -36,7 +37,15 @@ public class Grenade : HoldableObject
 				c.GetComponent<DamageReciever>().TakeDamage(damage);
 			}
 		}
+		particleSystem.Play();
 
+		StartCoroutine(DestroyAfterParticles());
+	}
+
+	private IEnumerator DestroyAfterParticles()
+	{
+		while (particleSystem.isPlaying)
+			yield return null;
 		Destroy(gameObject);
 	}
 }
