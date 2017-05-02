@@ -37,6 +37,7 @@ public class Grenade : HoldableObject
 				c.GetComponent<DamageReciever>().TakeDamage(damage);
 			}
 		}
+		GetComponent<AudioSource>().Play();
 		particleSystem.Play();
 
 		StartCoroutine(DestroyAfterParticles());
@@ -45,6 +46,8 @@ public class Grenade : HoldableObject
 	private IEnumerator DestroyAfterParticles()
 	{
 		while (particleSystem.isPlaying)
+			yield return null;
+		while (GetComponent<AudioSource>().isPlaying)
 			yield return null;
 		Destroy(gameObject);
 	}
