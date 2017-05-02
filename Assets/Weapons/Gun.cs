@@ -13,6 +13,7 @@ public class Gun : MonoBehaviour
 	public float bulletDamage;
 	public float bulletWaitTimeS;
 	public float bulletSpeed;
+	public float bulletInaccuracy;
 
 	public Magazine currMag { get; set; }
 
@@ -36,7 +37,7 @@ public class Gun : MonoBehaviour
 	{
 		while (firing && currMag != null && currMag.bulletCount > 0)
 		{
-			FireBullet(BulletPrefab, BulletSpawnPoint, bulletDamage, bulletSpeed);
+			FireBullet(BulletPrefab, BulletSpawnPoint, bulletDamage, bulletSpeed, bulletInaccuracy);
 			FireCasing(CasingPrefab, CasingSpawnPoint);
 			source.Play();
 			currMag.bulletCount--;
@@ -45,11 +46,12 @@ public class Gun : MonoBehaviour
 		}
 	}
 
-	public static void FireBullet(GameObject bulletPrefab, Transform bulletSpawnPoint, float dmg, float speed)
+	public static void FireBullet(GameObject bulletPrefab, Transform bulletSpawnPoint, float dmg, float speed, float inaccuracy)
 	{
 		Bullet bullet = Instantiate(bulletPrefab).GetComponent<Bullet>();
 		bullet.transform.position = bulletSpawnPoint.position;
-		bullet.transform.eulerAngles = bulletSpawnPoint.eulerAngles;
+		Vector3 randOffset = new Vector3(Random.Range(-inaccuracy, inaccuracy), Random.Range(-inaccuracy, inaccuracy), Random.Range(-inaccuracy, inaccuracy));
+		bullet.transform.eulerAngles = bulletSpawnPoint.eulerAngles + randOffset;
 		bullet.damage = dmg;
 		bullet.speed = speed;
 	}

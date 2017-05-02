@@ -9,6 +9,7 @@ public class FlyingEnemyMovementController : MonoBehaviour {
 	public float bulletDamage;
 	public float bulletSpeed;
 	public float bulletWaitTime;
+	public float bulletInaccuracy;
 	public int roundsInBurst;
 
 	protected float fireTime = 3f;
@@ -87,7 +88,7 @@ public class FlyingEnemyMovementController : MonoBehaviour {
 		while (roundsInBurst > roundsFired)
 		{
 			yield return new WaitForSeconds(bulletWaitTime);
-			Gun.FireBullet(bulletPrefab, bulletSpawnPoint, bulletDamage, bulletSpeed);
+			Gun.FireBullet(bulletPrefab, bulletSpawnPoint, bulletDamage, bulletSpeed, bulletInaccuracy);
 			roundsFired++;
 		}
 
