@@ -19,18 +19,44 @@ public class Gun : MonoBehaviour
 
 	private bool firing = false;
 	private AudioSource source;
+	private List<Gun> hoveredGuns = new List<Gun>();
 
 	// Use this for initialization
 	void Start ()
 	{
 		source = GetComponent<AudioSource>();
+	}
 
-		Singletons.GunHand().triggerDown += () =>
+	public void PickUp()
+	{
+		Singletons.GunHand().triggerDown += HandleTriggerDown;
+		Singletons.GunHand().triggerUp += HandleTriggerUp;
+	}
+
+	public void PutDown()
+	{
+		Singletons.GunHand().triggerDown -= HandleTriggerDown;
+		Singletons.GunHand().triggerUp -= HandleTriggerUp;
+	}
+
+	private void HandleTriggerDown()
+	{
+		if (hoveredGuns.Count > 0)
+		{
+			Singletons.GunHand().PutDownGun(this);
+			Singletons.GunHand().PickUpGun(hoveredGuns[0]);
+		}
+		else
 		{
 			firing = true;
 			StartCoroutine(fireBullets());
-		};
-		Singletons.GunHand().triggerUp += () => firing = false;
+		}
+	}
+
+	private void HandleTriggerUp()
+	{
+		firing = false;
+
 	}
 
 	private IEnumerator fireBullets()
@@ -63,5 +89,23 @@ public class Gun : MonoBehaviour
 		casing.transform.position = casingSpawnPoint.position;
 		casing.transform.eulerAngles = casingSpawnPoint.eulerAngles;
 		casing.GetComponent<Rigidbody>().AddForce(casing.transform.right.normalized * casingSpeed);
+	}
+
+	void OnTriggerEnter(Collider other)
+	{
+		var gun = other.GetComponent<Gun>();
+		if (gun != null)
+		{
+			hoveredGuns.Add(gun);
+		}
+	}
+
+	void OnTriggerExit(Collider other)
+	{
+		var gun = other.GetComponent<Gun>();
+		if (gun != null && hoveredGuns.Contains(gun))
+		{
+			hoveredGuns.Remove(gun);
+		}
 	}
 }

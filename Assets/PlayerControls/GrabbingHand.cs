@@ -19,7 +19,7 @@ public class GrabbingHand : Hand
 		{
 			if (behindPlayer())
 			{
-				currHeldObject = Instantiate(Singletons.GunHand().StartingGunPrefab.GetComponent<Gun>().MagazinePrefab).GetComponent<HoldableObject>();
+				currHeldObject = Instantiate(Singletons.GunHand().getCurrGun().MagazinePrefab).GetComponent<HoldableObject>();
 				currHeldObject.transform.SetParent(transform);
 				currHeldObject.transform.localPosition = new Vector3();
 				currHeldObject.transform.localEulerAngles = Vector3.zero;
@@ -40,7 +40,6 @@ public class GrabbingHand : Hand
 				if (currHeldObject.GetComponent<Rigidbody>())
 				{
 					currHeldObject.GetComponent<Rigidbody>().AddForce(currForceVector);
-					Debug.Log(currForceVector);
 				}
 				currHeldObject = null;
 			}
