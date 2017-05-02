@@ -23,6 +23,7 @@ public class GrabbingHand : Hand
 				currHeldObject.transform.SetParent(transform);
 				currHeldObject.transform.localPosition = new Vector3();
 				currHeldObject.transform.localEulerAngles = Vector3.zero;
+				currHeldObject.PickupObject();
 			}
 			else if (currHeldObject == null && hoveredObjects.Count > 0)
 			{

@@ -24,7 +24,7 @@ public class HoldableObject : MonoBehaviour
 
 	public void PickupObject()
 	{
-		if (transform.parent.GetComponent<ObjectSnapArea>())
+		if (transform.parent != null && transform.parent.GetComponent<ObjectSnapArea>())
 			transform.parent.GetComponent<ObjectSnapArea>().currSnappedObj = null;
 		GetComponent<Rigidbody>().useGravity = false;
 		GetComponent<Rigidbody>().isKinematic = true;
@@ -57,6 +57,8 @@ public class HoldableObject : MonoBehaviour
 		transform.localPosition = Vector3.zero;
 		transform.localEulerAngles = Vector3.zero;
 		transform.localScale = new Vector3(1 / transform.parent.lossyScale.x, 1 / transform.parent.lossyScale.y, 1 / transform.parent.lossyScale.z);
+		GetComponent<Rigidbody>().useGravity = false;
+		GetComponent<Rigidbody>().isKinematic = true;
 		HandleSnap(snp);
 	}
 
