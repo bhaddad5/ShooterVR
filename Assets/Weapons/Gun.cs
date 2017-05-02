@@ -9,6 +9,8 @@ public class Gun : MonoBehaviour
 	public GameObject CasingPrefab;
 	public Transform BulletSpawnPoint;
 	public Transform CasingSpawnPoint;
+	public AudioClip BulletSound;
+	public AudioClip OutOfAmmoSound;
 
 	public float bulletDamage;
 	public float bulletWaitTimeS;
@@ -65,10 +67,16 @@ public class Gun : MonoBehaviour
 		{
 			FireBullet(BulletPrefab, BulletSpawnPoint, bulletDamage, bulletSpeed, bulletInaccuracy);
 			FireCasing(CasingPrefab, CasingSpawnPoint);
+			source.clip = BulletSound;
 			source.Play();
 			currMag.bulletCount--;
 			Singletons.GunHand().TriggerHaptic();
 			yield return new WaitForSeconds(bulletWaitTimeS);
+		}
+		if (currMag != null && currMag.bulletCount == 0)
+		{
+			source.clip = OutOfAmmoSound;
+			source.Play();
 		}
 	}
 

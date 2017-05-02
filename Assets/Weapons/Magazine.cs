@@ -5,10 +5,13 @@ using UnityEngine;
 public class Magazine : HoldableObject
 {
 	public int bulletCount;
+	public AudioClip ReloadSound;
 
 	protected override void HandleSnap(ObjectSnapArea objSnappedTo)
 	{
 		objSnappedTo.transform.parent.parent.GetComponent<Gun>().currMag = this;
+		GetComponent<AudioSource>().clip = ReloadSound;
+		GetComponent<AudioSource>().Play();
 	}
 
 	protected override void HandlePickup()
