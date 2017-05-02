@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class DamageReciever : MonoBehaviour
 {
-	public float health;
+	public float Health;
 	private bool destroying = false;
 
 	public void TakeDamage(float damage)
 	{
-		health -= damage;
-		if (health <= 0)
+		Health = Mathf.Max(Health - damage, 0);
+		if (Health <= 0)
 		{
 			if(!destroying && !gameObject.GetComponent<Camera>())
 			{
