@@ -65,5 +65,13 @@ public class HoldableObject : MonoBehaviour
 	protected virtual void HandlePickup() { }
 
 	protected virtual void HandleDrop() { }
+
+	void OnCollisionEnter(Collision collision)
+	{
+		if (collision.gameObject.tag == "PlayerInteractible")
+		{
+			Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
+		}
+	}
 }
 

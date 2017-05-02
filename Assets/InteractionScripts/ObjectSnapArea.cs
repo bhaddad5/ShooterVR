@@ -11,7 +11,10 @@ public class ObjectSnapArea : MonoBehaviour
 
 	void Start()
 	{
-		GameObject startingObj = Instantiate(startingAttachedObject.gameObject);
-		startingObj.GetComponent<HoldableObject>().SnapToObject(this);
+		if (startingAttachedObject != null)
+		{
+			GameObject startingObj = Instantiate(startingAttachedObject.gameObject);
+			startingObj.GetComponent<HoldableObject>().SnapToObject(this);
+		}
 	}
 }

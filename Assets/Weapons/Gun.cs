@@ -108,4 +108,12 @@ public class Gun : MonoBehaviour
 			hoveredGuns.Remove(gun);
 		}
 	}
+
+	void OnCollisionEnter(Collision collision)
+	{
+		if (collision.gameObject.tag == "PlayerInteractible")
+		{
+			Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
+		}
+	}
 }
