@@ -9,7 +9,7 @@ public class GrabbingHand : Hand
 	private HoldableObject currHeldObject;
 	private List<HoldableObject> hoveredObjects = new List<HoldableObject>();
 
-	private Vector3 lastHandPos;
+	private List<Vector3> lastHandPoses = new List<Vector3>(new [] {Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero, });
 	private Vector3 currForceVector;
 
 	// Use this for initialization
@@ -49,8 +49,9 @@ public class GrabbingHand : Hand
 
 	protected override void OnUpdate()
 	{
-		currForceVector = (transform.position - lastHandPos) * 30000;
-		lastHandPos = transform.position;
+		currForceVector = (transform.position - lastHandPoses[4]) * 6000;
+		lastHandPoses.Insert(0, transform.position);
+		lastHandPoses.RemoveAt(5);
 	}
 
 	private bool behindPlayer()
