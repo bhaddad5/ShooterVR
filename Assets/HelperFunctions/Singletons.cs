@@ -23,4 +23,14 @@ public class Singletons
 		}
 		return gunHand;
 	}
+
+	private static PlayerAffectsVisualizer playerAffectsVisualizer;
+	public static PlayerAffectsVisualizer PlayerAffectsVisualizer()
+	{
+		if (playerAffectsVisualizer == null)
+		{
+			playerAffectsVisualizer = GameObject.Find("[CameraRig]").GetComponentInChildren<PlayerAffectsVisualizer>();
+		}
+		return playerAffectsVisualizer;
+	}
 }

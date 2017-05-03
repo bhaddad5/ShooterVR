@@ -32,7 +32,7 @@ public class HoldableObject : MonoBehaviour
 		GetComponent<Rigidbody>().isKinematic = true;
 		transform.SetParent(Singletons.GrabbingHand().transform);
 		HandlePickup();
-		lastPickupTime = Time.time;
+		lastPickupTime = Time.realtimeSinceStartup;
 	}
 
 	public void DropObject()
@@ -51,12 +51,16 @@ public class HoldableObject : MonoBehaviour
 			snp.currSnappedObj == null && 
 			transform.parent != null && 
 			!transform.parent.GetComponent<ObjectSnapArea>() &&
-			pickupSnapTimeout + lastPickupTime <= Time.time)
+			pickupSnapTimeout + lastPickupTime <= Time.realtimeSinceStartup)
 		{
 			SnapToObject(snp);
 			Singletons.GrabbingHand().HandleSnapAway(this);
 		}
+
+		HandleTriggerEnter(other);
 	}
+
+	protected virtual void HandleTriggerEnter(Collider other) { }
 
 	public void SnapToObject(ObjectSnapArea snp)
 	{
