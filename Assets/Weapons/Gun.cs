@@ -17,6 +17,7 @@ public class Gun : MonoBehaviour
 	public float bulletWaitTimeS;
 	public float bulletSpeed;
 	public float bulletInaccuracy;
+	public bool automaticFire;
 
 	private bool firing = false;
 	private AudioSource source;
@@ -71,6 +72,7 @@ public class Gun : MonoBehaviour
 			source.Play();
 			currMag.bulletCount--;
 			Singletons.GunHand().TriggerHaptic();
+			firing = automaticFire;
 			yield return new WaitForSeconds(bulletWaitTimeS);
 		}
 		if (currMag != null && currMag.bulletCount == 0)
