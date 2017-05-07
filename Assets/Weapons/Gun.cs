@@ -11,13 +11,12 @@ public class Gun : MonoBehaviour
 	public Transform CasingSpawnPoint;
 	public AudioClip BulletSound;
 	public AudioClip OutOfAmmoSound;
+	public ObjectSnapArea magSnapArea;
 
 	public float bulletDamage;
 	public float bulletWaitTimeS;
 	public float bulletSpeed;
 	public float bulletInaccuracy;
-
-	public Magazine currMag { get; set; }
 
 	private bool firing = false;
 	private AudioSource source;
@@ -63,6 +62,7 @@ public class Gun : MonoBehaviour
 
 	private IEnumerator fireBullets()
 	{
+		var currMag = magSnapArea.currSnappedObj as Magazine;
 		while (firing && currMag != null && currMag.bulletCount > 0)
 		{
 			FireBullet(BulletPrefab, BulletSpawnPoint, bulletDamage, bulletSpeed, bulletInaccuracy);
@@ -122,6 +122,15 @@ public class Gun : MonoBehaviour
 		if (collision.gameObject.tag == "PlayerInteractible")
 		{
 			Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
+		}
+	}
+
+	public void TryEjectClip()
+	{
+		if (magSnapArea.currSnappedObj != null)
+		{
+			magSnapArea.currSnappedObj.DropObject();
+			magSnapArea.currSnappedObj = null;
 		}
 	}
 }

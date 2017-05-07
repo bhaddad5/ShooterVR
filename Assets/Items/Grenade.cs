@@ -8,7 +8,7 @@ public class Grenade : HoldableObject
 	public float damageRadius;
 	public int timeToDetination;
 	public Rigidbody pin;
-	public ParticleSystem particleSystem;
+	public ParticleSystem particles;
 
 	protected override void HandleDrop()
 	{
@@ -38,14 +38,14 @@ public class Grenade : HoldableObject
 			}
 		}
 		GetComponent<AudioSource>().Play();
-		particleSystem.Play();
+		particles.Play();
 
 		StartCoroutine(DestroyAfterParticles());
 	}
 
 	private IEnumerator DestroyAfterParticles()
 	{
-		while (particleSystem.isPlaying)
+		while (particles.isPlaying)
 			yield return null;
 		while (GetComponent<AudioSource>().isPlaying)
 			yield return null;

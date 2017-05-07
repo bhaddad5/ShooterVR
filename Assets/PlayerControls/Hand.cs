@@ -8,6 +8,8 @@ public class Hand : MonoBehaviour
 {
 	public Action triggerDown;
 	public Action triggerUp;
+	public Action gripDown;
+	public Action gripUp;
 
 	protected SteamVR_TrackedController ctrl;
 
@@ -16,6 +18,8 @@ public class Hand : MonoBehaviour
 		ctrl = GetComponent<SteamVR_TrackedController>();
 		ctrl.TriggerClicked += (sender, args) => triggerDown.Invoke();
 		ctrl.TriggerUnclicked += (sender, args) => triggerUp.Invoke();
+		ctrl.Gripped += (sender, args) => gripDown.Invoke();
+		ctrl.Ungripped += (sender, args) => gripUp.Invoke();
 		Setup();
 	}
 	protected virtual void Setup(){}

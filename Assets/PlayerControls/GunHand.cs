@@ -11,6 +11,16 @@ public class GunHand : Hand
 	// Use this for initialization
 	protected override void Setup()
 	{
+		gripDown += () =>
+		{
+			if(currGun != null)
+			{
+				currGun.TryEjectClip();
+			}
+		};
+
+		gripUp += () =>	{};
+
 		var startGun = Instantiate(StartingGunPrefab);
 		PickUpGun(startGun.GetComponent<Gun>());
 	}
